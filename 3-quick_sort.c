@@ -43,7 +43,7 @@ int partition(int *arr, int start_idx, int last_idx, int size)
 			}
 		}
 	}
-	/* swap pivot*/
+	
 	if (last_idx != i + 1)
 	{
 		temp = arr[last_idx];
