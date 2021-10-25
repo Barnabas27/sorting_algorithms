@@ -1,74 +1,78 @@
 #include "sort.h"
-#include <stdio.h>
+
 /**
- * quick_sort - sorts an array of integers in ascending order
- * using the quick sort sort algorithm
- * @array: pointer to the array
- * @size: size of the array
+* quick_sort - Sorts an array of integers in ascending order using the Quick
+* sort algorithm
+* @array: The array to be sorted
+* @size: The size of the array
 */
+
 void quick_sort(int *array, size_t size)
 {
-recursive_quick_sort(array, size, 0, size - 1);
+	quick(array, 0, size - 1, size);
 }
 
 /**
- * recursive_quick_sort - recursive part
- * @array: array to use
- * @size: size
- * @start: start index
- * @end: end index
+* partition - Partitions an array
+* @start_idx: The start index
+* @last_idx: The last idex
+* @arr: The array that is being sorted
+* @size: The size of the array
+*
+* Return: The index of the pivot
 */
-void recursive_quick_sort(int *array, size_t size, int start, int end)
-{
-int p;
-if (start < end)
-{
-	p = partition(array, size, start, end);
 
-	recursive_quick_sort(array, size, start, p - 1);
-	recursive_quick_sort(array, size, p + 1, end);
-}
-
-}
-
-/**
- * partition - partition the array
- * @array: array to use
- * @size: size
- * @start: start index
- * @end: end index
- * Return: partition index
-*/
-size_t partition(int *array, size_t size, int start, int end)
+int partition(int *arr, int start_idx, int last_idx, int size)
 {
-int pivot = array[end];
-int i = start - 1;
-int j;
+	int pivot = arr[last_idx];
+	int i = start_idx - 1;
+	int temp, j;
 
-for (j = start; j <= end - 1; j++)
-{
-	if (array[j] < pivot)
+	for (j = start_idx; j < last_idx; j++)
 	{
-		i++;
-		swap_int1(array, i, j);
-		print_array(array, size);
+		if (arr[j] <= pivot)
+		{
+			i++;
+			if (i != j)
+			{
+				temp = arr[i];
+				arr[i] = arr[j];
+				arr[j] = temp;
+				print_array(arr, size);
+			}
+		}
 	}
-}
-swap_int1(array, i + 1, end);
-print_array(array, size);
-return (i+1);
+
+
+	if (last_idx != i + 1)
+	{
+		temp = arr[last_idx];
+		arr[last_idx] = arr[i + 1];
+		arr[i + 1] = temp;
+
+		print_array(arr, size);
+	}
+
+	return (i + 1);
 }
 
+
 /**
- * swap_int1 - swap variable values
- * @array: array to use
- * @a: index 1
- * @b: index 2
+* quick - performs the quick sort recursively
+* @start_idx: The starting index
+* @last_idx: The last index
+* @arr: The array we are sorting
+* @size: The size of the array
 */
-void swap_int1(int *array, int a, int b)
+
+void quick(int *arr, int start_idx, int last_idx, int size)
 {
-int tmp;
-tmp = array[a];
-array[a] = array[b];
-array[b] = tmp;
+	int pivot_idx;
+
+	if (start_idx < last_idx)
+	{
+		pivot_idx = partition(arr, start_idx, last_idx, size);
+		quick(arr, start_idx, pivot_idx - 1, size);
+		quick(arr, pivot_idx + 1, last_idx, size);
+	}
 }
