@@ -29,7 +29,8 @@ void swap(listint_t *node1, listint_t *node2, listint_t **head);
 void swap_int(int *array, size_t a, size_t b);
 void swap_int1(int *array, int a, int b);
 void insertion_sort_list(listint_t **list);
-int partition(int *arr, int start_idx, int last_idx, int size);
 void quick(int *arr, int start_idx, int last_idx, int size);
-void tip(int *a, int *b);
+void recursive_quick_sort(int *array, size_t size, int start, int end);
+size_t partition(int *array, size_t size, int start, int end);
+
 #endif
